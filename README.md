@@ -1,6 +1,3 @@
- rchestrated comprehensive README framework for industry standards
-Orchestrated comprehensive README framework for industry standards
-markdown
 # Customer Feedback Collector
 
 Full-stack web app for collecting and analyzing customer feedback. Businesses create customizable feedback forms, share a public link with customers, and track responses through a live analytics dashboard.
@@ -26,37 +23,41 @@ Full-stack web app for collecting and analyzing customer feedback. Businesses cr
 **Infra:** Render (Docker web service + PostgreSQL + static site)
 
 ## Architecture
-Customer ─▶ Public Form (React) ─▶ POST /responses
-│
-Spring Boot REST API
-┌──────────────────────────┴───────────────────────────┐
-│ Public: GET /form/{token}, POST /responses │
-│ Admin: POST /login, /forms (CRUD), GET /dashboard/{id}│
-└──────────────────────────┬───────────────────────────┘
-Controller → Service → Repository
-│
-PostgreSQL
 
+```
+Customer -> Public Form (React) -> POST /responses
+                                        |
+                          Spring Boot REST API
+              --------------------------------------------------------
+              | Public: GET /form/{token}, POST /responses            |
+              | Admin:  POST /login, /forms (CRUD), GET /dashboard/{id}|
+              --------------------------------------------------------
+                              Controller -> Service -> Repository
+                                        |
+                                   PostgreSQL
+```
 
 ## Project Structure
+
+```
 customer-feedback-collector/
 ├── backend/
-│ └── src/main/java/com/feedback/
-│ ├── controller/ REST endpoints
-│ ├── service/ Business logic
-│ ├── repository/ Spring Data JPA
-│ ├── model/ JPA entities
-│ ├── dto/ Request/response payloads
-│ ├── exception/ Global error handling
-│ └── config/ CORS
+│   └── src/main/java/com/feedback/
+│       ├── controller/   REST endpoints
+│       ├── service/      Business logic
+│       ├── repository/   Spring Data JPA
+│       ├── model/        JPA entities
+│       ├── dto/          Request/response payloads
+│       ├── exception/    Global error handling
+│       └── config/       CORS
 ├── frontend/
-│ └── src/
-│ ├── pages/ PublicFormPage, LoginPage, DashboardPage, FormBuilderPage
-│ ├── components/ QuestionInput, StatsCard
-│ ├── context/ AuthContext
-│ └── api/ Axios client
+│   └── src/
+│       ├── pages/        PublicFormPage, LoginPage, DashboardPage, FormBuilderPage
+│       ├── components/   QuestionInput, StatsCard
+│       ├── context/      AuthContext
+│       └── api/          Axios client
 └── README.md
-
+```
 
 ## Local Setup
 
@@ -78,6 +79,7 @@ npm run dev
 ```
 
 Seed an admin user (no signup flow):
+
 ```sql
 INSERT INTO admins (email, password) VALUES ('admin@test.com', 'admin123');
 ```
@@ -88,7 +90,7 @@ Built with Claude as an AI pair-programmer:
 
 - **Design:** JPA entity relationships (Form → Question → Response → Answer) and REST API contract
 - **Scaffolding:** repositories, services, controllers, generated then reviewed against the intended contract
-- **Debugging:** diagnosed and fixed a bidirectional JPA infinite-recursion bug (`Form → Question → Form → ...` in JSON responses) by adding `@JsonIgnore` on child-side relationship fields, after identifying the root cause in Jackson's serialization of the `@OneToMany`/`@ManyToOne` pair
+- **Debugging:** diagnosed and fixed a bidirectional JPA infinite-recursion bug (Form → Question → Form → ... in JSON responses) by adding `@JsonIgnore` on child-side relationship fields, after identifying the root cause in Jackson's serialization of the `@OneToMany`/`@ManyToOne` pair
 - **Deployment:** resolved a Render-specific Vite build permission error via `npm ci && npm run build`, and fixed SPA client-side routing with a `/* → /index.html` rewrite rule
 
 ## Known Limitations

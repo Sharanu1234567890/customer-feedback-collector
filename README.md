@@ -1,7 +1,7 @@
 # Customer Feedback Collector
 
 Full-stack web app for collecting and analyzing customer feedback. Businesses create customizable feedback forms, share a public link with customers, and track responses through a live analytics dashboard.
-
+  
 **Live App:** https://customer-feedback-collector-f.onrender.com          
 **API:** https://feedback-backend-dgw7.onrender.com
 **Demo Credentials:** `admin@test.com` / `admin123`
@@ -27,7 +27,7 @@ Full-stack web app for collecting and analyzing customer feedback. Businesses cr
 ```
 Customer -> Public Form (React) -> POST /responses
                                         |
-                          Spring Boot REST API
+                              Spring Boot REST API
               --------------------------------------------------------
               | Public: GET /form/{token}, POST /responses            |
               | Admin:  POST /login, /forms (CRUD), GET /dashboard/{id}|
